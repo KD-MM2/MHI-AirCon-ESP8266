@@ -31,13 +31,20 @@ Resource USING:
  ---
  **Screenshot:**
  
- Panel on Chrome:
- 
+
+## Panel on Chrome:
+
 ![enter image description here](https://raw.githubusercontent.com/KD-MM2/MHI-AirCon-ESP8266/main/screenshot/panel.jpg)
 
 
-Panel on iOS Safari:
+
+
+
+## Panel on iOS Safari:
+
 ![enter image description here](https://raw.githubusercontent.com/KD-MM2/MHI-AirCon-ESP8266/main/screenshot/panel_on_ios.jpg)
 
-Serial Monitor at 115200 baudrate:
+
+## Serial Monitor at 115200 baudrate:
+
 ![enter image description here](https://raw.githubusercontent.com/KD-MM2/MHI-AirCon-ESP8266/main/screenshot/terminal.jpg)

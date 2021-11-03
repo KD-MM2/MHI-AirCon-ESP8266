@@ -30,8 +30,11 @@ Resource USING:
  - CSS Minifier(Google for it)
  ---
  **Screenshot:**
+ 
  Panel on Chrome:
- ![enter image description here](https://raw.githubusercontent.com/KD-MM2/MHI-AirCon-ESP8266/main/screenshot/panel.jpg)
+ 
+![enter image description here](https://raw.githubusercontent.com/KD-MM2/MHI-AirCon-ESP8266/main/screenshot/panel.jpg)
+
 
 Panel on iOS Safari:
 ![enter image description here](https://raw.githubusercontent.com/KD-MM2/MHI-AirCon-ESP8266/main/screenshot/panel_on_ios.jpg)

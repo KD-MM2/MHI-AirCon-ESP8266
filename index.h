@@ -21,8 +21,28 @@ const char MAIN_page[] PROGMEM = R"=====(
                                 <path d="M20 9a3 3 0 0 0 -3 -3h-1a3 3 0 0 0 -3 3v6a3 3 0 0 0 3 3h1a3 3 0 0 0 3 -3"></path>
                             </svg></div>
                     </div>
-                    <div style="width: 106px;height: 117px;margin-top: -117px;margin-left: 112px;"><img class="img-fluid" src="horizon.png" style="margin-top: 40px;margin-left: 25px;" width="49" height="69"></div>
-                    <div style="width: 100px;height: 117px;margin-top: -117px;margin-left: 217px;"><img src="vert.png" width="37" height="49" style="margin-top: 40px;margin-left: 28px;width: 37px;"></div>
+                    <div style="width: 106px;height: 117px;margin-top: -117px;margin-left: 112px;">
+                      <svg viewBox="253.803 186.466 15.324 10.673" xmlns="http://www.w3.org/2000/svg" class="img-fluid" style="margin-top: 20px;margin-left: 20px;" width="65" height="85" fill="#ffffff">
+                        <path d="M 268.807 187.559 C 268.807 187.029 268.377 186.601 267.847 186.601 L 255.061 186.601 C 254.529 186.601 254.098 187.029 254.098 187.559 L 254.104 191.861 C 254.104 192.39 254.534 192.82 255.063 192.82 L 255.784 192.82 L 256.504 191.867 L 261.084 191.867 L 261.084 191.376 L 256.258 191.376 C 256.258 191.376 255.727 192.083 255.541 192.331 L 255.063 192.331 C 254.805 192.331 254.592 192.12 254.592 191.861 L 254.59 187.559 C 254.59 187.301 254.802 187.091 255.061 187.091 L 267.847 187.091 C 268.108 187.091 268.32 187.301 268.32 187.559 L 268.323 191.861 C 268.323 192.12 268.11 192.331 267.852 192.331 L 267.375 192.331 C 267.189 192.083 266.655 191.376 266.655 191.376 L 261.828 191.376 L 261.828 191.867 L 266.409 191.867 L 267.131 192.82 L 267.852 192.82 C 268.382 192.82 268.812 192.39 268.812 191.861 L 268.807 187.559"/>
+                        <path id="h_2" style="display: inline" d="M 257.557 193.347 L 257.368 193.357 L 257.178 193.347 L 256.276 196.984 C 256.631 197.035 256.996 197.066 257.368 197.066 C 257.739 197.066 258.102 197.035 258.462 196.984 L 257.557 193.347"/>
+                        <path id="h_3" style="display: inline" d="M 259.043 196.874 C 259.686 196.724 260.295 196.495 260.862 196.192 L 258.645 193.125 C 258.486 193.184 258.318 193.229 258.15 193.267 L 259.043 196.874"/>
+                        <path id="h_1" style="display: inline" d="M 256.584 193.267 C 256.416 193.23 256.25 193.184 256.088 193.125 L 253.871 196.193 C 254.439 196.496 255.049 196.724 255.691 196.874 L 256.584 193.267"/>
+                        <path id="h_5" style="display: inline" d="M 265.738 193.347 L 265.549 193.357 L 265.357 193.347 L 264.455 196.984 C 264.812 197.035 265.175 197.066 265.549 197.066 C 265.92 197.066 266.283 197.035 266.64 196.984 L 265.738 193.347"/>
+                        <path id="h_6" style="display: inline" d="M 267.223 196.874 C 267.864 196.724 268.475 196.495 269.043 196.192 L 266.827 193.125 C 266.665 193.184 266.498 193.229 266.33 193.267 L 267.223 196.874"/>
+                        <path id="h_4" style="display: inline" d="M 264.768 193.267 C 264.598 193.23 264.43 193.184 264.27 193.125 L 262.052 196.193 C 262.619 196.496 263.229 196.724 263.87 196.874 L 264.768 193.267"/>
+                      </svg>
+                    </div>
+                    
+                    <div style="width: 100px;height: 117px;margin-top: -117px;margin-left: 217px;">
+                      <svg viewBox="432.825 237.25 8.243 10.925" xmlns="http://www.w3.org/2000/svg" class="img-fluid" style="margin-top: 40px;margin-left: 20px;" width="40" height="50" fill="#ffffff">
+                        <path d="M 440.848 237.433 L 437.937 237.433 C 436.81 237.433 435.895 238.345 435.895 239.473 L 435.899 242.208 L 435.895 242.208 L 435.895 242.699 L 438.222 242.699 L 438.96 244.171 L 440.851 244.171 Z M 439.244 243.712 L 438.493 242.208 L 436.357 242.208 C 436.357 241.328 436.355 239.473 436.355 239.473 C 436.355 238.599 437.065 237.89 437.937 237.89 L 437.939 237.89 L 440.007 237.89 C 440.007 238.654 440.009 243.712 440.009 243.712 L 439.244 243.712"/>
+                        <path id="v_highest" style="display: inline" d="M 435.527 243.097 L 433.026 243.097 C 433.026 243.481 433.082 243.853 433.183 244.209 L 435.63 243.646 C 435.566 243.469 435.527 243.285 435.527 243.097"/>
+                        <path id="v_high" style="display: inline" d="M 435.818 244.031 L 433.318 244.609 C 433.486 245.035 433.725 245.437 434.025 245.802 L 436.21 244.491 C 436.054 244.347 435.922 244.194 435.818 244.031"/>
+                        <path id="v_low" style="display: inline" d="M 437.48 245.222 L 435.843 247.243 C 436.265 247.457 436.719 247.626 437.202 247.749 L 437.978 245.36 C 437.806 245.325 437.639 245.278 437.48 245.222"/>
+                        <path id="v_middle" style="display: inline" d="M 436.555 244.769 L 434.307 246.12 C 434.642 246.468 435.035 246.777 435.473 247.038 L 437.073 245.062 C 436.887 244.975 436.715 244.877 436.555 244.769"/>
+                        <path id="v_lowest" style="display: inline" d="M 437.611 247.839 C 438.037 247.918 438.478 247.961 438.931 247.961 L 438.931 245.459 C 438.752 245.459 438.572 245.447 438.396 245.425 L 437.611 247.839"/>
+                      </svg>
+                    </div>
                 </div>
                 <div class="d-inline-flex" style="height: 70px;width: 365px;background: var(--bs-gray-900);border-top-width: 1px;border-top-style: solid;border-bottom-width: 1px;border-bottom-style: solid;color: rgb(255,255,255);">
                     <div class="d-inline-flex align-items-xl-end" style="height: 71px;width: 122.5px;min-height: 71px;max-height: 71px;"><i class="fas fa-fan" style="width: 35px;height: 71px;font-size: 30px;line-height: 100px;margin-left: 1px;"></i>
@@ -79,6 +99,13 @@ const char MAIN_page[] PROGMEM = R"=====(
   var fan_3 = document.getElementById("fan_3").style;
   var fan_4 = document.getElementById("fan_4").style;
 
+  var h_1 = document.getElementById("h_1").style;
+  var h_2 = document.getElementById("h_2").style;
+  var h_3 = document.getElementById("h_3").style;
+  var h_4 = document.getElementById("h_4").style; 
+  var h_5 = document.getElementById("h_5").style;
+  var h_6 = document.getElementById("h_6").style; 
+
 function updateStatus() {
   $.ajax({
     type: 'GET',
@@ -111,6 +138,115 @@ function updateStatus() {
         $("#mode_icon").removeClass();
         $("#mode_icon").addClass("fa fa-sun-o");
        }
+
+      if(state["vert"] == 0){
+        document.getElementById("v_highest").style.display="inline";
+        document.getElementById("v_high").style.display="inline";
+        document.getElementById("v_middle").style.display="inline";
+        document.getElementById("v_low").style.display="inline";
+        document.getElementById("v_lowest").style.display="inline";
+      } else if(state["vert"] == 1){
+        document.getElementById("v_highest").style.display="inline";
+        document.getElementById("v_high").style.display="none";
+        document.getElementById("v_middle").style.display="none";
+        document.getElementById("v_low").style.display="none";
+        document.getElementById("v_lowest").style.display="none";
+      } else if(state["vert"] == 2){
+        document.getElementById("v_highest").style.display="none";
+        document.getElementById("v_high").style.display="inline";
+        document.getElementById("v_middle").style.display="none";
+        document.getElementById("v_low").style.display="none";
+        document.getElementById("v_lowest").style.display="none";
+      } else if(state["vert"] == 3){
+        document.getElementById("v_highest").style.display="none";
+        document.getElementById("v_high").style.display="none";
+        document.getElementById("v_middle").style.display="inline";
+        document.getElementById("v_low").style.display="none";
+        document.getElementById("v_lowest").style.display="none";
+      } else if(state["vert"] == 4){
+        document.getElementById("v_highest").style.display="none";
+        document.getElementById("v_high").style.display="none";
+        document.getElementById("v_middle").style.display="none";
+        document.getElementById("v_low").style.display="inline";
+        document.getElementById("v_lowest").style.display="none";
+      } else if(state["vert"] == 5){
+        document.getElementById("v_highest").style.display="none";
+        document.getElementById("v_high").style.display="none";
+        document.getElementById("v_middle").style.display="none";
+        document.getElementById("v_low").style.display="none";
+        document.getElementById("v_lowest").style.display="inline";
+      } else if(state["vert"] == 6){
+        document.getElementById("v_highest").style.display="none";
+        document.getElementById("v_high").style.display="none";
+        document.getElementById("v_middle").style.display="none";
+        document.getElementById("v_low").style.display="none";
+        document.getElementById("v_lowest").style.display="none";
+      }
+
+      if(state["horizon"] == 0){
+        h_1.display="inline";
+        h_2.display="inline";
+        h_3.display="inline";
+        h_4.display="inline";
+        h_5.display="inline";
+        h_6.display="inline";
+      } else if(state["horizon"] == 1){
+        h_1.display="inline";
+        h_2.display="none";
+        h_3.display="none";
+        h_4.display="inline";
+        h_5.display="none";
+        h_6.display="none";
+      } else if(state["horizon"] == 2){
+        h_1.display="inline";
+        h_2.display="none";
+        h_3.display="none";
+        h_4.display="none";
+        h_5.display="inline";
+        h_6.display="none";
+      } else if(state["horizon"] == 3){
+        h_1.display="none";
+        h_2.display="inline";
+        h_3.display="none";
+        h_4.display="none";
+        h_5.display="inline";
+        h_6.display="none";
+      } else if(state["horizon"] == 4){
+        h_1.display="none";
+        h_2.display="inline";
+        h_3.display="none";
+        h_4.display="none";
+        h_5.display="none";
+        h_6.display="inline";
+      } else if(state["horizon"] == 5){
+        h_1.display="none";
+        h_2.display="none";
+        h_3.display="inline";
+        h_4.display="none";
+        h_5.display="none";
+        h_6.display="inline";
+      } else if(state["horizon"] == 6){
+        h_1.display="none";
+        h_2.display="none";
+        h_3.display="inline";
+        h_4.display="inline";
+        h_5.display="none";
+        h_6.display="none";
+      } else if(state["horizon"] == 7){
+        h_1.display="inline";
+        h_2.display="none";
+        h_3.display="none";
+        h_4.display="none";
+        h_5.display="none";
+        h_6.display="inline";
+      } else if(state["horizon"] == 8){
+        h_1.display="none";
+        h_2.display="none";
+        h_3.display="none";
+        h_4.display="none";
+        h_5.display="none";
+        h_6.display="none";
+      }
       if(state["fan"] == 0){
         fan_auto.color="rgb(0,0,0)";
         fan_auto.background="rgb(255,255,255)";

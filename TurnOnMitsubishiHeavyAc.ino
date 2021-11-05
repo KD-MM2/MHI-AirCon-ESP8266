@@ -12,23 +12,12 @@
 const uint16_t kIrLed = 4;
 const char* ssid = "YOUR-WIFI-SSID";
 const char* password = "YOUR-WIFI-PASSWORD";
-
 int temperature, fan, opmode, vertical, horizontal;
 bool power_state;
 
 IRMitsubishiHeavy152Ac ac(kIrLed);
 ESP8266WebServer server(80);
 
-//================IR function================
-void printState() {
-  Serial.println("Mitsubishi Heavy A/C remote is in the following state:");
-  Serial.printf("%s\n", ac.toString().c_str());
-  unsigned char* ir_code = ac.getRaw(); //ac.get__().c_str(); 
-  Serial.print("IR Code: 0x");
-  for (uint8_t i = 0; i < kMitsubishiHeavy152StateLength; i++)
-    Serial.printf("%02X", ir_code[i]);
-  Serial.println();
-}
 void set_default() {
   ac.setPower(false);
   ac.setFan(0);
@@ -51,12 +40,10 @@ void power_onoff() {
     power_state = true;
     ac.setPower(power_state);
     ac.send();
-    printState();
   } else if(power_state == true) {
     power_state = false;
     ac.setPower(power_state);
     ac.send();
-    printState();
   }
 }
 void temp_up() {
@@ -65,12 +52,10 @@ void temp_up() {
     temperature ++;
     ac.setTemp(temperature);
     ac.send();
-    printState();
   } else if(temperature == 31) {
     temperature = 31;
     ac.setTemp(temperature);
     ac.send();
-    printState();
   }
 }
 void temp_down() {
@@ -79,12 +64,10 @@ void temp_down() {
     temperature --;
     ac.setTemp(temperature);
     ac.send();
-    printState();
   } else if(temperature == 17) {
     temperature = 17;
     ac.setTemp(temperature);
     ac.send();
-    printState();
   }
 }
 void change_mode() {
@@ -93,12 +76,10 @@ void change_mode() {
     opmode ++;
     ac.setMode(opmode);
     ac.send();
-    printState();
   } else if(opmode == 4) {
     opmode = 0;
     ac.setMode(opmode);
     ac.send();
-    printState();
   }
 }
 void change_fan() {
@@ -107,22 +88,18 @@ void change_fan() {
     fan ++;
     ac.setFan(fan);
     ac.send();
-    printState();
   } else if(fan == 4) {
     fan = 6;
     ac.setFan(fan);
     ac.send();
-    printState();
   } else if(fan == 6) {
     fan = 8;
     ac.setFan(fan);
     ac.send();
-    printState();
   } else if(fan == 8) {
     fan = 0;
     ac.setFan(fan);
     ac.send();
-    printState();
   }
 }
 void change_vertical() {
@@ -131,12 +108,10 @@ void change_vertical() {
     vertical ++;
     ac.setSwingVertical(vertical);
     ac.send();
-    printState();
   } else if(vertical == 6) {
     vertical = 0;
     ac.setSwingVertical(vertical);
     ac.send();
-    printState();
   }
 }
 void change_horizontal() {
@@ -145,12 +120,10 @@ void change_horizontal() {
     horizontal ++;
     ac.setSwingHorizontal(horizontal);
     ac.send();
-    printState();
   } else if(horizontal == 8) {
     horizontal = 0;
     ac.setSwingHorizontal(horizontal);
     ac.send();
-    printState();
   }
 }
 void handleRoot() {
@@ -173,7 +146,6 @@ void setup(void){
   ac.begin();
   set_default();
   Serial.println("Mitsubishi Heavy A/C remote is in the following state:");
-  printState();
   WiFi.begin(ssid, password);
   Serial.println("");
   while (WiFi.status() != WL_CONNECTED) {
@@ -204,7 +176,6 @@ void setup(void){
   server.on("/fanBtn", [](){change_fan();handleRoot();});
   server.on("/vertBtn", [](){change_vertical();handleRoot();});
   server.on("/horizonBtn", [](){change_horizontal();handleRoot();});
-  
   server.on("/state", HTTP_GET, []() {
     DynamicJsonDocument root(1024);
     get_state();

@@ -10,9 +10,9 @@ const char MAIN_page[] PROGMEM = R"=====(
 </head>
 <body class="text-center d-grid">
     <div class="container d-grid flex-grow-0 flex-shrink-0 justify-content-center align-content-center flex-wrap">
-        <div class="flex-wrap" id="panel" style="background: url(&quot;frame.png&quot;) center / contain no-repeat;no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;/*-o-background-size: cover;*/height: 500px;width: 500px;">
-            <div style="width: 365px;height: 345px;margin-top: 77px;margin-left: 67px;">
-                <div style="height: 118px;width: 365px;background: var(--bs-gray-900);padding-top: 35px;text-align: left;padding-left: 50px;">
+        <div class="block glow flex-wrap" id="panel" style="background: url(&quot;frame.png&quot;) center / contain no-repeat;no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;/*-o-background-size: cover;*/height: 500px;width: 500px;">
+            <div style="width: 368px;height: 345px;margin-top: 75px;margin-left: 65px;">
+                <div style="height: 118px;width: 368px;background: var(--bs-gray-900);padding-top: 35px;text-align: left;padding-left: 50px;">
                     <div class="d-inline-flex" style="width: 153px;height: 117px;margin-top: -35px;margin-left: -40px;"><i class="fa fa-thermometer-2" style="font-size: 40px;letter-spacing: 0px;line-height: 115px;width: 76px;height: 117px;color: rgb(255,255,255);text-align: center;"></i>
                         <p id="temperature" style="font-size: 40px;letter-spacing: 3px;font-family: DSEG7-Classic;line-height: 115px;height: 117px;width: 86px;color: rgb(255,255,255);">88</p>
                         <div><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-temperature-celsius" style="font-size: 30px;line-height: 0px;letter-spacing: 0px;width: 38px;height: 60px;padding-top: 30px;color: rgb(255,255,255);">
@@ -32,7 +32,6 @@ const char MAIN_page[] PROGMEM = R"=====(
                         <path id="h_4" style="display: inline" d="M 264.768 193.267 C 264.598 193.23 264.43 193.184 264.27 193.125 L 262.052 196.193 C 262.619 196.496 263.229 196.724 263.87 196.874 L 264.768 193.267"/>
                       </svg>
                     </div>
-                    
                     <div style="width: 100px;height: 117px;margin-top: -117px;margin-left: 217px;">
                       <svg viewBox="432.825 237.25 8.243 10.925" xmlns="http://www.w3.org/2000/svg" class="img-fluid" style="margin-top: 40px;margin-left: 20px;" width="40" height="50" fill="#ffffff">
                         <path d="M 440.848 237.433 L 437.937 237.433 C 436.81 237.433 435.895 238.345 435.895 239.473 L 435.899 242.208 L 435.895 242.208 L 435.895 242.699 L 438.222 242.699 L 438.96 244.171 L 440.851 244.171 Z M 439.244 243.712 L 438.493 242.208 L 436.357 242.208 C 436.357 241.328 436.355 239.473 436.355 239.473 C 436.355 238.599 437.065 237.89 437.937 237.89 L 437.939 237.89 L 440.007 237.89 C 440.007 238.654 440.009 243.712 440.009 243.712 L 439.244 243.712"/>
@@ -44,7 +43,7 @@ const char MAIN_page[] PROGMEM = R"=====(
                       </svg>
                     </div>
                 </div>
-                <div class="d-inline-flex" style="height: 70px;width: 365px;background: var(--bs-gray-900);border-top-width: 1px;border-top-style: solid;border-bottom-width: 1px;border-bottom-style: solid;color: rgb(255,255,255);">
+                <div class="d-inline-flex" style="height: 70px;width: 366px;background: var(--bs-gray-900);border-top-width: 1px;border-top-style: solid;border-bottom-width: 1px;border-bottom-style: solid;color: rgb(255,255,255);">
                     <div class="d-inline-flex align-items-xl-end" style="height: 71px;width: 122.5px;min-height: 71px;max-height: 71px;"><i class="fas fa-fan" style="width: 35px;height: 71px;font-size: 30px;line-height: 100px;margin-left: 1px;"></i>
                       <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-reception-0" id="fan_0" style="display: inline;width: 87px;height: 69px;border-right-width: 1px;border-right-style: solid;">
                             <path d="M0 13.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm4 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm4 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm4 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"></path>
@@ -64,15 +63,15 @@ const char MAIN_page[] PROGMEM = R"=====(
                     </div>
                     <div class="justify-content-xl-start" style="height: 71px;width: 80px;min-height: 71px;max-height: 71px;border-right-color: rgb(84,96,117);">
                         <p id="fan_max" class="text-center" style="background: #ffffff00;color: #ffffff;border-width: 1px;border-style: solid;border-radius: 10px;width: 68px;height: 25px;font-size: 12px;letter-spacing: 4px;margin-left: 5px;margin-top: 7px;line-height: 22px;">MAX</p>
-                        <p id="fan_auto" class="text-center" style="background: #ffffff00;color: #ffffff;border-width: 1px;border-style: solid;border-radius: 10px;width: 68px;height: 25px;font-size: 12px;letter-spacing: 4px;margin-left: 5px;margin-top: -10px;line-height: 22px;">AUTO</p>
+                        <p id="fan_auto" class="text-center" style="background: #ffffff00;color: #ffffff;border-width: 1px;border-style: solid;border-radius: 10px;width: 68px;height: 25px;font-size: 12px;letter-spacing: 3px;margin-left: 5px;margin-top: -10px;line-height: 22px;">AUTO</p>
                     </div>
                     <div class="justify-content-xl-start" style="height: 71px;width: 80px;min-height: 71px;max-height: 71px;">
-                        <p id="fan_econo" class="text-center" style="background: #ffffff00;color: #ffffff;border-width: 1px;border-style: solid;border-radius: 10px;width: 68px;height: 25px;font-size: 12px;letter-spacing: 4px;margin-left: 3px;margin-top: 7px;line-height: 22px;">ECONO</p>
-                        <p id="fan_turbo" class="text-center" style="background: #ffffff00;color: #ffffff;border-width: 1px;border-style: solid;border-radius: 10px;width: 68px;height: 25px;font-size: 12px;letter-spacing: 4px;margin-left: 3px;margin-top: -10px;line-height: 22px;">TURBO</p>
+                        <p id="fan_econo" class="text-center" style="background: #ffffff00;color: #ffffff;border-width: 1px;border-style: solid;border-radius: 10px;width: 68px;height: 25px;font-size: 12px;letter-spacing: 3px;margin-left: 3px;margin-top: 7px;line-height: 22px;">ECONO</p>
+                        <p id="fan_turbo" class="text-center" style="background: #ffffff00;color: #ffffff;border-width: 1px;border-style: solid;border-radius: 10px;width: 68px;height: 25px;font-size: 12px;letter-spacing: 3px;margin-left: 3px;margin-top: -10px;line-height: 22px;">TURBO</p>
                     </div>
                     <div style="width: 94px;height: 69px;border-left-width: 1px;border-left-style: solid;"><i id="mode_icon" class="fas fa-font" style="font-size: 40px;margin-top: 15px;width: 39.2px;"></i></div>
                 </div>
-                <div class="d-flex" style="height: 79px;width: 365px;background: var(--bs-gray-900);">
+                <div class="d-flex" style="height: 79px;width: 368px;background: var(--bs-gray-900);">
                     <div style="height: 78px;width: 61px;"><button class="btn btn-primary text-center" type="button" onclick="modeBtn()" style="padding: 0px;background: rgba(255,255,255,0);margin-top: 16px;border-width: 0px;"><i class="far fa-sun" style="font-size: 43px;"></i></button></div>
                     <div style="height: 78px;width: 61px;"><button class="btn btn-primary text-center" type="button" onclick="upBtn()" style="padding: 0px;background: rgba(255,255,255,0);border-width: 0px;margin-top: 15px;"><i class="fas fa-angle-double-up" style="font-size: 45px;width: 35px;"></i></button></div>
                     <div style="height: 78px;width: 61px;"><button class="btn btn-primary text-center" type="button" onclick="downBtn()" style="background: rgba(255,255,255,0);border-width: 0px;padding: 0px;margin-top: 16px;"><i class="fas fa-angle-double-down" style="font-size: 45px;width: 35px;"></i></button></div>
@@ -80,7 +79,7 @@ const char MAIN_page[] PROGMEM = R"=====(
                     <div style="height: 78px;width: 61px;"><button class="btn btn-primary text-center" type="button" onclick="horizontalBtn()" style="padding: 0px;background: rgba(255,255,255,0);border-width: 0px;margin-top: 15px;"><i class="fas fa-arrows-alt-h" style="font-size: 45px;border-width: -1px;"></i></button></div>
                     <div style="height: 78px;width: 61px;"><button class="btn btn-primary text-center" type="button" onclick="verticalBtn()" style="padding: 0px;background: rgba(255,255,255,0);border-width: 0px;margin: 15px;"><i class="fas fa-arrows-alt-v" style="font-size: 45px;"></i></button></div>
                 </div>
-                <div style="height: 79px;width: 365px;background: var(--bs-gray-900);"><button class="btn btn-primary text-center" type="button" onclick="powerBtn()" style="background: rgba(255,255,255,0);padding: 0px 0px;border-width: 0px;"><i class="fa fa-power-off" id="powerBtn_color" style="font-size: 75px;color: rgb(255,255,255);"></i></button></div>
+                <div style="height: 81px;width: 368px;background: var(--bs-gray-900);"><button class="btn btn-primary text-center" type="button" onclick="powerBtn()" style="background: rgba(255,255,255,0);padding: 0px 0px;border-width: 0px;"><i class="fa fa-power-off" id="powerBtn_color" style="font-size: 75px;color: rgb(255,255,255);"></i></button></div>
             </div>
         </div>
     </div>
@@ -88,7 +87,6 @@ const char MAIN_page[] PROGMEM = R"=====(
     <script src="jquery.js"></script>
   <script>
   var state = {}
-  
   var fan_auto = document.getElementById("fan_auto").style;
   var fan_max = document.getElementById("fan_max").style;
   var fan_turbo = document.getElementById("fan_turbo").style;
@@ -98,14 +96,13 @@ const char MAIN_page[] PROGMEM = R"=====(
   var fan_2 = document.getElementById("fan_2").style;
   var fan_3 = document.getElementById("fan_3").style;
   var fan_4 = document.getElementById("fan_4").style;
-
   var h_1 = document.getElementById("h_1").style;
   var h_2 = document.getElementById("h_2").style;
   var h_3 = document.getElementById("h_3").style;
   var h_4 = document.getElementById("h_4").style; 
   var h_5 = document.getElementById("h_5").style;
   var h_6 = document.getElementById("h_6").style; 
-
+  
 function updateStatus() {
   $.ajax({
     type: 'GET',
@@ -138,51 +135,56 @@ function updateStatus() {
         $("#mode_icon").removeClass();
         $("#mode_icon").addClass("fa fa-sun-o");
        }
-
       if(state["vert"] == 0){
         document.getElementById("v_highest").style.display="inline";
         document.getElementById("v_high").style.display="inline";
         document.getElementById("v_middle").style.display="inline";
         document.getElementById("v_low").style.display="inline";
         document.getElementById("v_lowest").style.display="inline";
-      } else if(state["vert"] == 1){
+      }
+	    else if(state["vert"] == 1){
         document.getElementById("v_highest").style.display="inline";
         document.getElementById("v_high").style.display="none";
         document.getElementById("v_middle").style.display="none";
         document.getElementById("v_low").style.display="none";
         document.getElementById("v_lowest").style.display="none";
-      } else if(state["vert"] == 2){
+      }
+	    else if(state["vert"] == 2){
         document.getElementById("v_highest").style.display="none";
         document.getElementById("v_high").style.display="inline";
         document.getElementById("v_middle").style.display="none";
         document.getElementById("v_low").style.display="none";
         document.getElementById("v_lowest").style.display="none";
-      } else if(state["vert"] == 3){
+      }
+	    else if(state["vert"] == 3){
         document.getElementById("v_highest").style.display="none";
         document.getElementById("v_high").style.display="none";
         document.getElementById("v_middle").style.display="inline";
         document.getElementById("v_low").style.display="none";
         document.getElementById("v_lowest").style.display="none";
-      } else if(state["vert"] == 4){
+      }
+	    else if(state["vert"] == 4){
         document.getElementById("v_highest").style.display="none";
         document.getElementById("v_high").style.display="none";
         document.getElementById("v_middle").style.display="none";
         document.getElementById("v_low").style.display="inline";
         document.getElementById("v_lowest").style.display="none";
-      } else if(state["vert"] == 5){
+      }
+	    else if(state["vert"] == 5){
         document.getElementById("v_highest").style.display="none";
         document.getElementById("v_high").style.display="none";
         document.getElementById("v_middle").style.display="none";
         document.getElementById("v_low").style.display="none";
         document.getElementById("v_lowest").style.display="inline";
-      } else if(state["vert"] == 6){
+      }
+	    else if(state["vert"] == 6){
         document.getElementById("v_highest").style.display="none";
         document.getElementById("v_high").style.display="none";
         document.getElementById("v_middle").style.display="none";
         document.getElementById("v_low").style.display="none";
         document.getElementById("v_lowest").style.display="none";
       }
-
+      
       if(state["horizon"] == 0){
         h_1.display="inline";
         h_2.display="inline";
@@ -190,56 +192,64 @@ function updateStatus() {
         h_4.display="inline";
         h_5.display="inline";
         h_6.display="inline";
-      } else if(state["horizon"] == 1){
+      }
+	    else if(state["horizon"] == 1){
         h_1.display="inline";
         h_2.display="none";
         h_3.display="none";
         h_4.display="inline";
         h_5.display="none";
         h_6.display="none";
-      } else if(state["horizon"] == 2){
+      }
+	    else if(state["horizon"] == 2){
         h_1.display="inline";
         h_2.display="none";
         h_3.display="none";
         h_4.display="none";
         h_5.display="inline";
         h_6.display="none";
-      } else if(state["horizon"] == 3){
+      }
+	    else if(state["horizon"] == 3){
         h_1.display="none";
         h_2.display="inline";
         h_3.display="none";
         h_4.display="none";
         h_5.display="inline";
         h_6.display="none";
-      } else if(state["horizon"] == 4){
+      }
+	    else if(state["horizon"] == 4){
         h_1.display="none";
         h_2.display="inline";
         h_3.display="none";
         h_4.display="none";
         h_5.display="none";
         h_6.display="inline";
-      } else if(state["horizon"] == 5){
+      }
+	    else if(state["horizon"] == 5){
         h_1.display="none";
         h_2.display="none";
         h_3.display="inline";
         h_4.display="none";
         h_5.display="none";
         h_6.display="inline";
-      } else if(state["horizon"] == 6){
+      }
+	    else if(state["horizon"] == 6){
         h_1.display="none";
         h_2.display="none";
         h_3.display="inline";
         h_4.display="inline";
         h_5.display="none";
         h_6.display="none";
-      } else if(state["horizon"] == 7){
+      }
+	    else if(state["horizon"] == 7){
         h_1.display="inline";
         h_2.display="none";
         h_3.display="none";
         h_4.display="none";
         h_5.display="none";
         h_6.display="inline";
-      } else if(state["horizon"] == 8){
+      }
+	    else if(state["horizon"] == 8){
         h_1.display="none";
         h_2.display="none";
         h_3.display="none";
@@ -247,6 +257,7 @@ function updateStatus() {
         h_5.display="none";
         h_6.display="none";
       }
+	
       if(state["fan"] == 0){
         fan_auto.color="rgb(0,0,0)";
         fan_auto.background="rgb(255,255,255)";
@@ -261,8 +272,8 @@ function updateStatus() {
         fan_2.display="none";
         fan_3.display="none";
         fan_4.display="none";
-
-      } else if(state["fan"] == 4){
+      }
+	    else if(state["fan"] == 4){
         fan_auto.color="rgb(255,255,255)";
         fan_auto.background="rgba(255,255,255,0)";
         fan_max.color="rgb(0,0,0)";
@@ -276,8 +287,8 @@ function updateStatus() {
         fan_2.display="none";
         fan_3.display="none";
         fan_4.display="inline";
-
-      } else if(state["fan"] == 6){
+      }
+	    else if(state["fan"] == 6){
         fan_auto.color="rgb(255,255,255)";
         fan_auto.background="rgba(255,255,255,0)";
         fan_max.color="rgb(255,255,255)";
@@ -291,8 +302,8 @@ function updateStatus() {
         fan_2.display="none";
         fan_3.display="none";
         fan_4.display="none";
-
-      } else if(state["fan"] == 8){
+      }
+	    else if(state["fan"] == 8){
         fan_auto.color="rgb(255,255,255)";
         fan_auto.background="rgba(255,255,255,0)";
         fan_max.color="rgb(255,255,255)";
@@ -306,8 +317,8 @@ function updateStatus() {
         fan_2.display="none";
         fan_3.display="none";
         fan_4.display="inline";
-
-      } else if(state["fan"] == 1){
+      }
+	    else if(state["fan"] == 1){
         fan_auto.color="rgb(255,255,255)";
         fan_auto.background="rgba(255,255,255,0)";
         fan_max.color="rgb(255,255,255)";
@@ -321,8 +332,8 @@ function updateStatus() {
         fan_2.display="none";
         fan_3.display="none";
         fan_4.display="none";
-
-      } else if(state["fan"] == 2){
+      }
+	    else if(state["fan"] == 2){
         fan_auto.color="rgb(255,255,255)";
         fan_auto.background="rgba(255,255,255,0)";
         fan_max.color="rgb(255,255,255)";
@@ -336,8 +347,8 @@ function updateStatus() {
         fan_2.display="inline";
         fan_3.display="none";
         fan_4.display="none";
-
-      } else if(state["fan"] == 3){
+      }
+	    else if(state["fan"] == 3){
         fan_auto.color="rgb(255,255,255)";
         fan_auto.background="rgba(255,255,255,0)";
         fan_max.color="rgb(255,255,255)";

@@ -201,7 +201,6 @@ void power_onoff(void *ptr) {
     setPwrBtnIcon(power_state);
     ac.send();
   }
-  printState();
 }
 void temp_up(void *ptr) {
   get_state();
@@ -216,7 +215,6 @@ void temp_up(void *ptr) {
     NxTemp.setValue(temperature);
     ac.send();
   }
-  printState();
 }
 void temp_down(void *ptr) {
   get_state();
@@ -229,8 +227,8 @@ void temp_down(void *ptr) {
     temperature = 17;
     ac.setTemp(temperature);
     NxTemp.setValue(temperature);
-    ac.send();  }
-  printState();
+    ac.send();  
+  }
 }
 void change_mode(void *ptr) {
   get_state();
@@ -245,7 +243,6 @@ void change_mode(void *ptr) {
     setModeIcon(opmode);
     ac.send();
   }
-  printState();
 }
 void change_fan(void *ptr) {
   get_state();
@@ -270,7 +267,6 @@ void change_fan(void *ptr) {
     setFanIcon(fan);
     ac.send();
   }
-  printState();
 }
 void change_vertical(void *ptr) {
   get_state();
@@ -285,7 +281,6 @@ void change_vertical(void *ptr) {
     setVertIcon(vertical);
     ac.send();
   }
-  printState();
 }
 void change_horizontal(void *ptr) {
   get_state();
@@ -300,7 +295,6 @@ void change_horizontal(void *ptr) {
     setHorizonIcon(horizontal);
     ac.send();
   }
-  printState();
 }
 
 void setup() {

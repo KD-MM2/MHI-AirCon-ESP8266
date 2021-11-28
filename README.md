@@ -2,7 +2,10 @@
 
 ## Mitsubishi Heavy Industry Air Conditioner Control using ESP8266 and web server based on *IRremoteESP8266 ir_MitsubishiHeavy.h library*
 
-> STILL WORK IN PROGRESS
+> Nextion 2.4" Touchscreen LCD Version:
+- [Sketch](https://github.com/KD-MM2/MHI-AirCon-ESP8266/blob/main/Nextion-2.4-Touch-LCD_VERSION.ino)
+-  [HMI file(upload to lcd using Nextion Editor)](https://github.com/KD-MM2/MHI-AirCon-ESP8266/blob/main/Nextion-2.4-Touch-LCD_VERSION.HMI)
+- [TFT file(upload to lcd using SDCard)](https://github.com/KD-MM2/MHI-AirCon-ESP8266/blob/main/Nextion-2.4-Touch-LCD_VERSION.tft)
 ---
 SUPPORT:
 - Brand: Mitsubishi Heavy Industries,  Model: RLA502A700B remote (152 bit)

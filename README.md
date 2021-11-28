@@ -6,6 +6,11 @@
 - [Sketch](https://github.com/KD-MM2/MHI-AirCon-ESP8266/blob/main/Nextion-2.4-Touch-LCD_VERSION.ino)
 -  [HMI file(upload to lcd using Nextion Editor)](https://github.com/KD-MM2/MHI-AirCon-ESP8266/blob/main/Nextion-2.4-Touch-LCD_VERSION.HMI)
 - [TFT file(upload to lcd using SDCard)](https://github.com/KD-MM2/MHI-AirCon-ESP8266/blob/main/Nextion-2.4-Touch-LCD_VERSION.tft)
+
+> Screenshot:
+> [LINK](https://raw.githubusercontent.com/KD-MM2/MHI-AirCon-ESP8266/main/screenshot/FE18F70C-FF6D-496E-B476-792CF7180F55.jpeg)
+> [PINOUT](https://raw.githubusercontent.com/KD-MM2/MHI-AirCon-ESP8266/main/screenshot/CE7C7288-B2BD-46DD-BD1F-F21ADC1D2F00.jpeg)
+> [PINOUT](https://raw.githubusercontent.com/KD-MM2/MHI-AirCon-ESP8266/main/screenshot/6909BD9E-6AC5-41F6-A780-90C98D11C288.jpeg)
 ---
 SUPPORT:
 - Brand: Mitsubishi Heavy Industries,  Model: RLA502A700B remote (152 bit)

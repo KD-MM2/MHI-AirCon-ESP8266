@@ -358,13 +358,37 @@ void setup(void){
   server.on("/fa-regular-400.woff2", handleFont3);
   server.on("/fa-solid-900.woff2", handleFont4);
   server.on("/fontawesome-webfont.woff2", handleFont5);
-  server.on("/powerBtn", [](){power_onoff();handleRoot();});
-  server.on("/modeBtn", [](){change_mode();handleRoot();});
-  server.on("/upBtn", [](){temp_up();handleRoot();});
-  server.on("/downBtn", [](){temp_down();handleRoot();});
-  server.on("/fanBtn", [](){change_fan();handleRoot();});
-  server.on("/vertBtn", [](){change_vertical();handleRoot();});
-  server.on("/horizonBtn", [](){change_horizontal();handleRoot();});
+    
+  // wip
+  server.on("/powerBtn", [](){
+      power_onoff(void *ptr);
+      handleRoot();
+  });
+  server.on("/modeBtn", [](){
+      change_mode(void *ptr);
+      handleRoot();
+  });
+  server.on("/upBtn", [](){
+      temp_up(void *ptr);
+      handleRoot();
+  });
+  server.on("/downBtn", [](){
+      temp_down(void *ptr);
+      handleRoot();
+  });
+  server.on("/fanBtn", [](){
+      change_fan(void *ptr);
+      handleRoot();
+  });
+  server.on("/vertBtn", [](){
+      change_vertical(void *ptr);
+      handleRoot();
+  });
+  server.on("/horizonBtn", [](){
+      change_horizontal(void *ptr);
+      handleRoot();
+  });
+    
   server.on("/state", HTTP_GET, []() {
     DynamicJsonDocument root(1024);
     get_state();

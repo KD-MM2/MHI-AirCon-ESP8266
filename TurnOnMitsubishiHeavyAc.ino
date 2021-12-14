@@ -159,6 +159,19 @@ void setup(void){
   Serial.println(WiFi.localIP());
 
   server.on("/", handleRoot);
+  server.on("/state", HTTP_GET, []() {
+    DynamicJsonDocument root(1024);
+    get_state();
+    root["mode"] = opmode;
+    root["fan"] = fan;
+    root["temp"] = temperature;
+    root["power"] = power_state;
+    root["vert"] = vertical;
+    root["horizon"] = horizontal;
+    String output;
+    serializeJson(root, output);
+    server.send(200, "text/plain", output);
+  });
   server.on("/bootstrap.min.js", handleMdbJs);
   server.on("/jquery.js", handlejQuery);
   server.on("/bootstrap.min.css", handleMdbCss);
@@ -176,19 +189,6 @@ void setup(void){
   server.on("/fanBtn", [](){change_fan();handleRoot();});
   server.on("/vertBtn", [](){change_vertical();handleRoot();});
   server.on("/horizonBtn", [](){change_horizontal();handleRoot();});
-  server.on("/state", HTTP_GET, []() {
-    DynamicJsonDocument root(1024);
-    get_state();
-    root["mode"] = opmode;
-    root["fan"] = fan;
-    root["temp"] = temperature;
-    root["power"] = power_state;
-    root["vert"] = vertical;
-    root["horizon"] = horizontal;
-    String output;
-    serializeJson(root, output);
-    server.send(200, "text/plain", output);
-  });
   server.begin();
   Serial.println("HTTP server started");
 }

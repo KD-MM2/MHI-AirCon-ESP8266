@@ -10,9 +10,6 @@
 
 uint8_t broadcastAddress[] = {0x2C, 0xF4, 0x32, 0x1A, 0x7F, 0xAB};
 
-unsigned long previousMillis = 0;
-const long interval = 10000;
-
 typedef struct struct_message {
   int a;
 } struct_message;

@@ -1,26 +1,30 @@
 #include <ESP8266WiFi.h>
 #include <espnow.h>
-#include <IRremoteESP8266.h>
-#include <IRsend.h>
-#include <ir_MitsubishiHeavy.h>
 #include <ArduinoJson.h>
 #include <FS.h>
 #include <LittleFS.h>
 #include "Nextion.h"
 
-uint8_t broadcastAddress[] = {0x2C, 0xF4, 0x32, 0x1A, 0x7F, 0xAB};
+uint8_t broadcastAddress[] = { 0xBC, 0xFF, 0x4D, 0x18, 0x87, 0x7F };
 
 typedef struct struct_message {
-  int a;
+  uint32_t id;
+  uint32_t light_mode;
+  bool light_pwr;
+  uint32_t temperature;
+  uint32_t fan;
+  uint32_t opmode;
+  uint32_t vertical;
+  uint32_t horizontal;
+  bool power_state;
 } struct_message;
+
 struct_message myData;
+
 void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus) {
-  Serial.print("Last Packet Send Status: ");
-  if (sendStatus == 0){
-    Serial.println("Delivery success");
-  }
-  else{
-    Serial.println("Delivery fail");
+  //Serial.print("Last Packet Send Status: ");
+  if (sendStatus == 0) {
+    //Serial.println("Delivery success");
   }
 }
 
@@ -60,20 +64,20 @@ NexPicture NxLSttDim = NexPicture(1, 8, "lsttdim");
 NexPicture NxLSttNight = NexPicture(1, 9, "lsttnight");
 NexPicture NxLSttOff = NexPicture(1, 10, "lsttoff");
 
-const uint16_t kIrLed = 5;
-int temperature = 24;
-int fan = 0;
-int opmode = 0;
-int vertical = 0;
-int horizontal = 0;
+// set default values
+uint32_t temperature = 24;
+uint32_t fan = 0;
+uint32_t opmode = 0;
+uint32_t vertical = 0;
+uint32_t horizontal = 0;
 bool power_state = false;
 
-int light_mode = 0;
+uint32_t light_mode = 0;
 bool light_pwr = false;
 
 int page_flag = 0;
 
-// littlefs
+// spiffs
 bool loadConfig() {
   File configFile = LittleFS.open("/config.json", "r");
   if (!configFile) {
@@ -85,7 +89,7 @@ bool loadConfig() {
   }
   std::unique_ptr<char[]> buf(new char[size]);
   configFile.readBytes(buf.get(), size);
-  StaticJsonDocument<200> doc;
+  StaticJsonDocument<512> doc;
   auto error = deserializeJson(doc, buf.get());
   if (error) {
     return false;
@@ -96,21 +100,23 @@ bool loadConfig() {
   vertical = doc["vertical"];
   horizontal = doc["horizontal"];
   power_state = doc["power_state"];
+
   light_mode = doc["light_mode"];
-  myData.a = doc["light_mode"];
   light_pwr = doc["light_pwr"];
   page_flag = doc["page_flag"];
   return true;
+  configFile.close();
 }
 
-bool saveConfig(){
-  StaticJsonDocument<200> doc;
+bool saveConfig() {
+  StaticJsonDocument<512> doc;
   doc["temperature"] = temperature;
   doc["fan"] = fan;
   doc["opmode"] = opmode;
   doc["vertical"] = vertical;
   doc["horizontal"] = horizontal;
   doc["power_state"] = power_state;
+
   doc["light_mode"] = light_mode;
   doc["light_pwr"] = light_pwr;
   doc["page_flag"] = page_flag;
@@ -121,133 +127,132 @@ bool saveConfig(){
   }
   serializeJson(doc, configFile);
   return true;
+  configFile.close();
 }
-
-IRMitsubishiHeavy152Ac ac(kIrLed);
 
 NexTouch *nex_listen_list[] = {
-    &NxPageNext,
-    &NxPageBack,
-    &NxPwrBtn,
-    &NxTmpUpBtn,
-    &NxTmpDwnBtn,
-    &NxHorizonBtn,
-    &NxVertBtn,
-    &NxFanBtn,
-    &NxModeBtn,
-    &NxLightPower,
-    &NxLightOn,
-    &NxLightDim,
-    &NxLightNight,
-    &NxLightOff,
-    NULL
+  &NxPageNext,
+  &NxPageBack,
+  &NxPwrBtn,
+  &NxTmpUpBtn,
+  &NxTmpDwnBtn,
+  &NxHorizonBtn,
+  &NxVertBtn,
+  &NxFanBtn,
+  &NxModeBtn,
+  &NxLightPower,
+  &NxLightOn,
+  &NxLightDim,
+  &NxLightNight,
+  &NxLightOff,
+  NULL
 };
-void set_default() {
-  loadConfig();
-  ac.setPower(power_state);
-  ac.setFan(fan);
-  ac.setMode(opmode);
-  ac.setTemp(temperature);
-  ac.setSwingVertical(vertical);
-  ac.setSwingHorizontal(horizontal);
+
+// aircon func
+void sendDATA() {
+  if (page_flag == 0) {
+    myData.id = 0;
+    myData.temperature = temperature;
+    myData.fan = fan;
+    myData.opmode = opmode;
+    myData.vertical = vertical;
+    myData.horizontal = horizontal;
+    myData.power_state = power_state;
+  } else if (page_flag == 1) {
+    myData.id = 1;
+    myData.light_mode = light_mode;
+    myData.light_pwr = light_pwr;
+  }
+  esp_now_send(broadcastAddress, (uint8_t *)&myData, sizeof(myData));
+  saveConfig();
 }
-void get_state() {
-  temperature = ac.getTemp();
-  opmode = ac.getMode();
-  power_state = ac.getPower();
-  fan = ac.getFan();
-  vertical = ac.getSwingVertical();
-  horizontal = ac.getSwingHorizontal();
-  NxTemp.setValue(temperature);
-  setPwrBtnIcon(power_state);
-  setModeIcon(opmode);
-  setFanIcon(fan);
-  setVertIcon(vertical);
-  setHorizonIcon(horizontal);
-}
-void setPwrBtnIcon(bool power_state){
-  if(power_state == 0){
+
+void setPwrBtnIcon(bool power_state) {
+  if (power_state == 0) {
     NxPwrBtn.Set_background_image_pic(55);
-  } else if(power_state == 1){
+  } else if (power_state == 1) {
     NxPwrBtn.Set_background_image_pic(54);
   }
 }
-void setHorizonIcon(int horizontal){
-  if(horizontal == 0){
+
+void setHorizonIcon(int horizontal) {
+  if (horizontal == 0) {
     NxHorizon.setPic(23);
-  } else if(horizontal == 1) {
+  } else if (horizontal == 1) {
     NxHorizon.setPic(24);
-  } else if(horizontal == 2) {
+  } else if (horizontal == 2) {
     NxHorizon.setPic(25);
-  } else if(horizontal == 3) {
+  } else if (horizontal == 3) {
     NxHorizon.setPic(26);
-  } else if(horizontal == 4) {
+  } else if (horizontal == 4) {
     NxHorizon.setPic(27);
-  } else if(horizontal == 5) {
+  } else if (horizontal == 5) {
     NxHorizon.setPic(28);
-  } else if(horizontal == 6) {
+  } else if (horizontal == 6) {
     NxHorizon.setPic(29);
-  } else if(horizontal == 7) {
+  } else if (horizontal == 7) {
     NxHorizon.setPic(30);
-  } else if(horizontal == 8) {
+  } else if (horizontal == 8) {
     NxHorizon.setPic(31);
   }
 }
-void setVertIcon(int vertical){
-  if(vertical == 0){
+
+void setVertIcon(int vertical) {
+  if (vertical == 0) {
     NxVert.setPic(32);
-  } else if(vertical == 1){
+  } else if (vertical == 1) {
     NxVert.setPic(33);
-  } else if(vertical == 2){
+  } else if (vertical == 2) {
     NxVert.setPic(34);
-  } else if(vertical == 3){
+  } else if (vertical == 3) {
     NxVert.setPic(35);
-  } else if(vertical == 4){
+  } else if (vertical == 4) {
     NxVert.setPic(36);
-  } else if(vertical == 5){
+  } else if (vertical == 5) {
     NxVert.setPic(37);
-  } else if(vertical == 6){
+  } else if (vertical == 6) {
     NxVert.setPic(38);
   }
 }
-void setFanIcon(int fan){
-  if(fan == 0){
+
+void setFanIcon(int fan) {
+  if (fan == 0) {
     NxFan.setPic(53);
     NxFanMAuto.setPic(16);
     NxFanMMax.setPic(17);
     NxFanMTurbo.setPic(19);
     NxFanMEco.setPic(21);
-  } else if(fan == 4){
+  } else if (fan == 4) {
     NxFan.setPic(49);
     NxFanMAuto.setPic(15);
     NxFanMMax.setPic(18);
     NxFanMTurbo.setPic(19);
     NxFanMEco.setPic(21);
-  } else if(fan == 6){
+  } else if (fan == 6) {
     NxFan.setPic(53);
     NxFanMAuto.setPic(15);
     NxFanMMax.setPic(17);
     NxFanMTurbo.setPic(19);
     NxFanMEco.setPic(22);
-  } else if(fan == 8){
+  } else if (fan == 8) {
     NxFan.setPic(49);
     NxFanMAuto.setPic(15);
     NxFanMMax.setPic(17);
     NxFanMTurbo.setPic(20);
     NxFanMEco.setPic(21);
-  } else if(fan == 1){
+  } else if (fan == 1) {
     NxFan.setPic(52);
     NxFanMAuto.setPic(15);
     NxFanMMax.setPic(17);
     NxFanMTurbo.setPic(19);
     NxFanMEco.setPic(21);
-  } else if(fan == 2){
+  } else if (fan == 2) {
     NxFan.setPic(51);
     NxFanMAuto.setPic(15);
     NxFanMMax.setPic(17);
     NxFanMTurbo.setPic(19);
     NxFanMEco.setPic(21);
-  } else if(fan == 3){
+  } else if (fan == 3) {
     NxFan.setPic(50);
     NxFanMAuto.setPic(15);
     NxFanMMax.setPic(17);
@@ -255,32 +260,33 @@ void setFanIcon(int fan){
     NxFanMEco.setPic(21);
   }
 }
-void setModeIcon(int opmode){
-  if(opmode == 0){
+
+void setModeIcon(int opmode) {
+  if (opmode == 0) {
     NxMAuto.setPic(40);
     NxMCool.setPic(41);
     NxMDry.setPic(43);
     NxMFan.setPic(45);
     NxMHeat.setPic(47);
-  } else if(opmode == 1){
+  } else if (opmode == 1) {
     NxMAuto.setPic(39);
     NxMCool.setPic(42);
     NxMDry.setPic(43);
     NxMFan.setPic(45);
     NxMHeat.setPic(47);
-  } else if(opmode == 2){
+  } else if (opmode == 2) {
     NxMAuto.setPic(39);
     NxMCool.setPic(41);
     NxMDry.setPic(44);
     NxMFan.setPic(45);
     NxMHeat.setPic(47);
-  } else if(opmode == 3){
+  } else if (opmode == 3) {
     NxMAuto.setPic(39);
     NxMCool.setPic(41);
     NxMDry.setPic(43);
     NxMFan.setPic(46);
     NxMHeat.setPic(47);
-  } else if(opmode == 4){
+  } else if (opmode == 4) {
     NxMAuto.setPic(39);
     NxMCool.setPic(41);
     NxMDry.setPic(43);
@@ -288,216 +294,131 @@ void setModeIcon(int opmode){
     NxMHeat.setPic(48);
   }
 }
+
 void power_onoff(void *ptr) {
-  get_state();
-  if(power_state == false) {
+  if (power_state == false) {
     power_state = true;
-    ac.setPower(power_state);
     setPwrBtnIcon(power_state);
-    ac.send();
-  } else if(power_state == true) {
+  } else if (power_state == true) {
     power_state = false;
-    ac.setPower(power_state);
     setPwrBtnIcon(power_state);
-    ac.send();
   }
-  saveConfig();  
+  sendDATA();
 }
+
 void temp_up(void *ptr) {
-  get_state();
-  if(temperature >= 17 && temperature <31) {
-    temperature ++;
-    ac.setTemp(temperature);
+  if (temperature >= 17 && temperature < 31) {
+    temperature++;
     NxTemp.setValue(temperature);
-    ac.send();
-  } else if(temperature == 31) {
+  } else if (temperature == 31) {
     temperature = 31;
-    ac.setTemp(temperature);
     NxTemp.setValue(temperature);
-    ac.send();
   }
-  saveConfig();
+  sendDATA();
 }
+
 void temp_down(void *ptr) {
-  get_state();
-  if(temperature > 17 && temperature <= 31) {
-    temperature --;
-    ac.setTemp(temperature);
+  if (temperature > 17 && temperature <= 31) {
+    temperature--;
     NxTemp.setValue(temperature);
-    ac.send();
-  } else if(temperature == 17) {
+  } else if (temperature == 17) {
     temperature = 17;
-    ac.setTemp(temperature);
     NxTemp.setValue(temperature);
-    ac.send();  
   }
-  saveConfig();  
+  sendDATA();
 }
+
 void change_mode(void *ptr) {
-  get_state();
-  if(opmode >= 0 && opmode < 4) {
-    opmode ++;
-    ac.setMode(opmode);
+  if (opmode >= 0 && opmode < 4) {
+    opmode++;
     setModeIcon(opmode);
-    ac.send();
-  } else if(opmode == 4) {
+  } else if (opmode == 4) {
     opmode = 0;
-    ac.setMode(opmode);
     setModeIcon(opmode);
-    ac.send();
   }
-  saveConfig();  
+  sendDATA();
 }
 void change_fan(void *ptr) {
-  get_state();
-  if(fan >= 0 && fan < 4) {
-    fan ++;
-    ac.setFan(fan);
+  if (fan >= 0 && fan < 4) {
+    fan++;
     setFanIcon(fan);
-    ac.send();
-  } else if(fan == 4) {
+  } else if (fan == 4) {
     fan = 8;
-    ac.setFan(fan);
     setFanIcon(fan);
-    ac.send();
-  } else if(fan == 8) {
+  } else if (fan == 8) {
     fan = 6;
-    ac.setFan(fan);
     setFanIcon(fan);
-    ac.send();
-  } else if(fan == 6) {
+  } else if (fan == 6) {
     fan = 0;
-    ac.setFan(fan);
     setFanIcon(fan);
-    ac.send();
   }
-  saveConfig();
+  sendDATA();
 }
+
 void change_vertical(void *ptr) {
-  get_state();
-  if(vertical >= 0 && vertical < 6) {
-    vertical ++;
-    ac.setSwingVertical(vertical);
+  if (vertical >= 0 && vertical < 6) {
+    vertical++;
     setVertIcon(vertical);
-    ac.send();
-  } else if(vertical == 6) {
+  } else if (vertical == 6) {
     vertical = 0;
-    ac.setSwingVertical(vertical);
     setVertIcon(vertical);
-    ac.send();
   }
-  saveConfig();  
+  sendDATA();
 }
+
 void change_horizontal(void *ptr) {
-  get_state();
-  if(horizontal >= 0 && horizontal < 8) {
-    horizontal ++;
-    ac.setSwingHorizontal(horizontal);
+  if (horizontal >= 0 && horizontal < 8) {
+    horizontal++;
     setHorizonIcon(horizontal);
-    ac.send();
-  } else if(horizontal == 8) {
+  } else if (horizontal == 8) {
     horizontal = 0;
-    ac.setSwingHorizontal(horizontal);
     setHorizonIcon(horizontal);
-    ac.send();
   }
-  saveConfig();  
+  sendDATA();
 }
+
 /*
- * LIGHT ZONE
- */
+   PAGE ZONE
+*/
 void next_page(void *ptr) {
   light.show();
-  get_light_state();
+  setLightIcon(light_mode);
   page_flag = 1;
 }
+
 void back_page(void *ptr) {
   aircon.show();
-  get_state();
+  NxTemp.setValue(temperature);
+  setPwrBtnIcon(power_state);
+  setModeIcon(opmode);
+  setFanIcon(fan);
+  setVertIcon(vertical);
+  setHorizonIcon(horizontal);
   page_flag = 0;
 }
-void light_power(void *ptr) {
-  get_light_state();
-  if(light_pwr == false) {
-    myData.a = 1;
-    esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
-    light_pwr = true;
-    setLightIcon(light_mode);
-    get_light_state();
-  } else if(light_pwr == true) {
-    myData.a = 0;
-    esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
-    light_pwr = false;
-    setLightIcon(light_mode);
-    get_light_state();
-  }
-  saveConfig();
-}
-void light_on(void *ptr) {
-  get_light_state();
-  myData.a = 1;
-  esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
-  light_pwr = 1;
-  setLightIcon(light_mode);
-  get_light_state();
-  saveConfig();
-}
-void light_off(void *ptr) {
-  get_light_state();
-  myData.a = 0;
-  esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
-  light_pwr = 0;
-  setLightIcon(light_mode);
-  get_light_state();
-  saveConfig();
-}
-void dim_light(void *ptr) {
-  get_light_state();
-  myData.a = 2;
-  esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
-  light_pwr = 1;
-  setLightIcon(light_mode);
-  get_light_state();
-  saveConfig();
-}
-void night_light(void *ptr) {
-  get_light_state();
-  myData.a = 3;
-  esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
-  light_pwr = 1;
-  setLightIcon(light_mode);
-  get_light_state();
-  saveConfig();
-}
-void get_light_state() {
-  light_mode = myData.a;
-  setLightIcon(light_mode);
-  setLightPower(light_pwr);
-}
-void setLightPower(bool light_pwr) {
-  if(light_pwr == 0){
+
+/* LIGHT ZONE  */
+void setLightIcon(uint32_t light_mode) {
+  if (light_mode == 0) {
     NxLightPower.Set_background_image_pic(55);
-  } else if(light_pwr == 1){
-    NxLightPower.Set_background_image_pic(54);
-  }
-}
-void setLightIcon(int light_mode) {
-  if(light_mode == 0) {
     NxLSttOn.setPic(60);
     NxLSttDim.setPic(59);
     NxLSttNight.setPic(58);
     NxLSttOff.setPic(62);
-  } else if(light_mode == 1) {
+  } else if (light_mode == 1) {
+    NxLightPower.Set_background_image_pic(54);
     NxLSttDim.setPic(59);
     NxLSttNight.setPic(58);
     NxLSttOff.setPic(61);
     NxLSttOn.setPic(64);
-  } else if(light_mode == 2) {
+  } else if (light_mode == 2) {
+    NxLightPower.Set_background_image_pic(54);
     NxLSttOn.setPic(60);
     NxLSttNight.setPic(58);
     NxLSttOff.setPic(61);
     NxLSttDim.setPic(63);
-  } else if(light_mode == 3) {
+  } else if (light_mode == 3) {
+    NxLightPower.Set_background_image_pic(54);
     NxLSttOn.setPic(60);
     NxLSttDim.setPic(59);
     NxLSttOff.setPic(61);
@@ -505,21 +426,62 @@ void setLightIcon(int light_mode) {
   }
 }
 
+void LightPower(void *ptr) {
+  if (light_pwr == 0) {
+    light_mode = 1;
+    light_pwr = true;
+  } else if (light_pwr == 1) {
+    light_mode = 0;
+    light_pwr = false;
+  }
+  setLightIcon(light_mode);
+  sendDATA();
+}
+
+void LightOn(void *ptr) {
+  light_mode = 1;
+  light_pwr = true;
+  setLightIcon(light_mode);
+  sendDATA();
+}
+
+void LightOff(void *ptr) {
+  light_mode = 0;
+  light_pwr = true;
+  setLightIcon(light_mode);
+  sendDATA();
+}
+
+void DimLight(void *ptr) {
+  light_mode = 2;
+  light_pwr = true;
+  setLightIcon(light_mode);
+  sendDATA();
+}
+
+void NightLight(void *ptr) {
+  light_mode = 3;
+  light_pwr = false;
+  setLightIcon(light_mode);
+  sendDATA();
+}
+
 void setup() {
-  Serial.begin(2000000);
+  //Serial.begin(115200);
   if (!LittleFS.begin()) {
     return;
   }
+  loadConfig();
+
   WiFi.mode(WIFI_STA);
   if (esp_now_init() != 0) {
-    Serial.println("Error initializing ESP-NOW");
+    //Serial.println("Error initializing ESP-NOW");
     return;
   }
   esp_now_set_self_role(ESP_NOW_ROLE_CONTROLLER);
   esp_now_register_send_cb(OnDataSent);
   esp_now_add_peer(broadcastAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0);
-  ac.begin();
-  set_default();
+
   nexInit();
   NxPwrBtn.attachPop(power_onoff, &NxPwrBtn);
   NxTmpUpBtn.attachPop(temp_up, &NxTmpUpBtn);
@@ -528,27 +490,33 @@ void setup() {
   NxVertBtn.attachPop(change_vertical, &NxVertBtn);
   NxFanBtn.attachPop(change_fan, &NxFanBtn);
   NxModeBtn.attachPop(change_mode, &NxModeBtn);
+
   NxPageNext.attachPop(next_page, &NxPageNext);
   NxPageBack.attachPop(back_page, &NxPageBack);
-  NxLightPower.attachPop(light_power, &NxLightPower);
-  NxLightOn.attachPop(light_on, &NxLightOn);
-  NxLightDim.attachPop(dim_light, &NxLightDim);
-  NxLightNight.attachPop(night_light, &NxLightNight);
-  NxLightOff.attachPop(light_off, &NxLightOff);
-  get_light_state();
-  get_state();
-  if(page_flag == 0) {
+
+  NxLightPower.attachPop(LightPower, &NxLightPower);
+  NxLightOn.attachPop(LightOn, &NxLightOn);
+  NxLightDim.attachPop(DimLight, &NxLightDim);
+  NxLightNight.attachPop(NightLight, &NxLightNight);
+  NxLightOff.attachPop(LightOff, &NxLightOff);
+
+  if (page_flag == 0) {
     aircon.show();
-    get_state();
-  } else if(page_flag == 1) {
+    NxTemp.setValue(temperature);
+    setPwrBtnIcon(power_state);
+    setModeIcon(opmode);
+    setFanIcon(fan);
+    setVertIcon(vertical);
+    setHorizonIcon(horizontal);
+  } else if (page_flag == 1) {
     light.show();
-    get_light_state();
+    setLightIcon(light_mode);
   }
 }
 
 void loop() {
   nexLoop(nex_listen_list);
-  if(millis() > 3600000){
+  if (millis() > 3600000) {
     saveConfig();
     ESP.restart();
   }
